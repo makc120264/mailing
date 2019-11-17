@@ -1,0 +1,46 @@
+{
+  "manifest_version": 2,
+  "name": "mailing for test task",
+  "description": "This extension will send messages to customers of the site https://www.svadba.com/",
+  "version": "1.0",
+  "browser_action": {
+    "default_icon": "icon.png",
+    "default_popup": "popup.html"
+  },
+  "content_scripts": [
+    {
+      "css": [
+        "/css/style.css"
+      ],
+      "js": [
+        "/popup.js",
+        "/notification.js"
+      ],
+      "matches": [
+        "*://*.svadba.com/chat/*",
+        "*://svadba.com/chat/*"
+      ],
+      "run_at": "document_end"
+    }
+  ],
+  "permissions": [
+    "*://*.svadba.com/*",
+    "*://tirael.su/*",
+    "*://ukrainiangirls.pw/*",
+    "*://ukrainiangirls.pw/*",
+    "*://*.anti-captcha.com/*",
+    "*://iloveslavic.com/*",
+    "*://*.iloveslavic.com/*",
+    "*://*.gstatvb.com/*",
+    "*://rucaptcha.com/*",
+    "*://*.rucaptcha.com/*",
+    "*://prime.date/*",
+    "*://*.prime.date/*",
+    "*://ladadate.com/*",
+    "webRequest",
+    "webRequestBlocking",
+    "notifications",
+    "storage"
+  ],
+  "content_security_policy": "script-src 'self' 'unsafe-eval' https://code.jquery.com https://cdnjs.cloudflare.com https://stackpath.bootstrapcdn.com object-src 'self'"
+}

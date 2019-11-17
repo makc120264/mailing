@@ -1,0 +1,13 @@
+body {
+    width: 500px;
+}
+form {
+    width: 100%;
+    margin: 0 10px 10px 10px;
+}
+button{
+    float: right;
+}
+.col{
+    margin-bottom: 30px;
+}
