@@ -13,8 +13,7 @@
         "/css/style.css"
       ],
       "js": [
-        "/popup.js",
-        "/notification.js"
+        "/popup.js"
       ],
       "matches": [
         "*://*.svadba.com/chat/*",
