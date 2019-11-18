@@ -7,34 +7,24 @@ $(document).ready(function () {
 });
 
 function mailing() {
-    let mailingList, i, stop;
+    let mailingList, man;
     mailingList = getMailingList();
     if (mailingList) {
-        i = 0;
-        stop = true;
 
-        function send() {
-            if (i < mailingList.length) {
-                i++;
-                sendingMessage(mailingList[i]);
-                setTimeout(send(), 10000);
-            } else {
-                stop = false;
-            }
+label: while (mailingList.length) {
+            man = mailingList.shift();
+            sendingMessage(man);
+            wait(10000);
+            continue label;
         }
 
-        if (stop) {
-            send();
-        } else {
-            return stop;
-        }
     } else {
         return mailingList;
     }
 }
 
 function sendingMessage(man) {
-    let url, sendData, form;
+    let url, sendData;
     url = 'https://www.svadba.com/chat/send-message/' + man.id;
 
     sendData = {
@@ -48,15 +38,14 @@ function sendingMessage(man) {
         url: url,
         data: sendData,
         success: function (resp) {
-            // alert(resp);
+            // alert('Result - ' + resp);
             // TODO We write the successful result to the log file
         },
-        error: function(jqXHR, textStatus, errorThrown){
-            // alert(textStatus);
+        error: function (jqXHR, textStatus, errorThrown) {
+            // alert('Error - ' + textStatus);
             // TODO We show the user an error and write it to the log file.
         }
     });
-
 }
 
 function getMailingList() {
@@ -105,7 +94,7 @@ function validateForm(form) {
     let result = true;
 
     if (form.elements.age.selectedOptions.length == 0) {
-        alert('Select countries please');
+        alert('Select age please');
         result = false;
     }
     if (form.elements.message.value == '') {
@@ -129,7 +118,7 @@ function getMenOnline() {
 function updateMenOnline() {
     setInterval(function () {
         getMenOnline();
-    }, 10000);
+    }, 30000);
 }
 
 function addAgeValue() {
@@ -168,6 +157,17 @@ function setCountriesOptions(countries) {
         options += '<option value="' + country + '">' + country + '</option>';
     });
     $('#countries').html(options);
+}
+
+// service functions
+
+function wait(ms) {
+    let d = new Date();
+    let d2 = null;
+    do {
+        d2 = new Date();
+    }
+    while (d2 - d < ms);
 }
 
 function inArray(arr, elem) {
