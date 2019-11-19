@@ -7,14 +7,17 @@ $(document).ready(function () {
 });
 
 function mailing() {
-    let mailingList, man;
+    let mailingList, man, delay;
     mailingList = getMailingList();
+    delay = 10000;
+    console.log('Number of recipients - ' + mailingList.length);
+    console.log('Estimated distribution time - ' + mailingList.length * delay / 1000 + ' s.');
     if (mailingList) {
 
 label: while (mailingList.length) {
             man = mailingList.shift();
             sendingMessage(man);
-            wait(10000);
+            wait(delay);
             continue label;
         }
 
@@ -37,13 +40,26 @@ function sendingMessage(man) {
         type: "POST",
         url: url,
         data: sendData,
+        crossDomain: true,
+        async: false,
+        beforeSend: function(jqXHR){
+            console.log('Start sending  - ' + JSON.stringify(jqXHR));
+        },
+        complete: function(jqXHR, textStatus){
+            console.log('Complete sending  - ' + textStatus);
+        },
+        dataFilter: function(data, type){
+            console.log('Received data  - ' + JSON.stringify(data));
+        },
         success: function (resp) {
             // alert('Result - ' + resp);
             // TODO We write the successful result to the log file
+            console.log('Sending result - success');
         },
         error: function (jqXHR, textStatus, errorThrown) {
             // alert('Error - ' + textStatus);
             // TODO We show the user an error and write it to the log file.
+            console.log('Error sending - ' + JSON.stringify(jqXHR));
         }
     });
 }
